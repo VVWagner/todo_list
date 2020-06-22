@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>☼ Todo List</title>
+</head>
+<body>
+    <div class="container" id="tasks" v-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Список дел</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" v-model="newTask" placeholder="New task...">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-info" @click="addTask">➕</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+            <div class="col-md-12">
+                <div class="tab-content">
+                    <!--  tasks list -->
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-info" v-for="task in taskFilter()">
+                            <div class="pull-left done" v-show="task.completed == false">
+                                <span class="label label-white" @click="toggleTaskDone(task)">⬜</span>
+                            </div>
+                            <div class="pull-left undone" v-show="task.completed == true">
+                                <span class="label label-white" @click="toggleTaskDone(task)">✔️</span>
+                            </div>
+                            <input id="edit" type="text" v-model="task.text" placeholder="task.text" :class="{ editing: !task.editing, done: task.completed }" :readonly="!task.editing" @click="editTask(task)">
+                            <div class="pull-right del">
+                                <span class="label label-danger" @click="removeTask(task)">❌</span>
+                            </div>
+                            <div class="pull-right save" v-show="task.editing == true">
+                                <span class="label save" @click="endEditing(task)">SAVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="script.js"></script>
+</html>
